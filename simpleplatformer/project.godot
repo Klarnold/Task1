@@ -11,9 +11,21 @@ config_version=5
 [application]
 
 config/name="SimplePlatformer"
+run/main_scene="uid://bgfvekfylnh0m"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [dotnet]
 
 project/assembly_name="SimplePlatformer"
+
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="player"
+2d_physics/layer_3="enemy"
+2d_physics/layer_4="pickups"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
