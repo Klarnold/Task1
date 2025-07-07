@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://cqncmy8dbn1pc"]
+[gd_scene load_steps=52 format=3 uid="uid://cqncmy8dbn1pc"]
 
 [ext_resource type="Texture2D" uid="uid://c1738vq0p60xp" path="res://assets/sprites/knight.png" id="1_ktrpi"]
 [ext_resource type="Script" uid="uid://mmvsxj1w7cx6" path="res://scripts/elements/player/player.gd" id="1_lh3fu"]
@@ -169,7 +169,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 15.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -313,7 +313,7 @@ animations = [{
 }]
 
 [sub_resource type="Animation" id="Animation_lgvkd"]
-length = 0.6
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -321,7 +321,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
+"times": PackedFloat32Array(0, 0.0666667, 0.133333),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
@@ -337,6 +337,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["attack"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageBox/HitBoxArea/HitBoxShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0333333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [false, false, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_b51c3"]
@@ -391,6 +403,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": ["death"]
+}
+
+[sub_resource type="Animation" id="Animation_lh3fu"]
+length = 0.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": ["fall"]
 }
 
 [sub_resource type="Animation" id="Animation_h2kxm"]
@@ -505,11 +545,40 @@ tracks/1/keys = {
 "values": ["win"]
 }
 
+[sub_resource type="Animation" id="Animation_onqbq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageBox/HitBoxArea/HitBoxShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_onqbq"]
 _data = {
+&"RESET": SubResource("Animation_onqbq"),
 &"attack": SubResource("Animation_lgvkd"),
 &"damaged": SubResource("Animation_b51c3"),
 &"death": SubResource("Animation_338lt"),
+&"fall": SubResource("Animation_lh3fu"),
 &"idle": SubResource("Animation_h2kxm"),
 &"jump": SubResource("Animation_yd248"),
 &"move": SubResource("Animation_2sqnu"),
@@ -522,7 +591,7 @@ script = ExtResource("1_lh3fu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h2kxm")
-animation = &"jump"
+animation = &"attack"
 
 [node name="PhysicShape" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(4, 11, 4, 1, -5, 1, -5, 11)
@@ -552,7 +621,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+zoom = Vector2(1.5, 1.5)
 process_callback = 0
 limit_left = 0
 limit_top = 0
