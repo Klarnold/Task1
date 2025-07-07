@@ -11,8 +11,6 @@ enum PlayerStateMachine{
 }
 
 # constants
-const VELOCITY_Y_MIN: float = -500
-const VELOCITY_Y_MAX: float = 500
 const SPEED: float = 15000.0
 const JUMP_SPEED: float = -25000.0
 const ATTACK_PUSH_SPEED: float = 14000
@@ -25,10 +23,10 @@ const ATTACK_PUSH_SPEED: float = 14000
 
 # onready variables
 @onready var state: PlayerStateMachine = PlayerStateMachine.MOVE
-@onready var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # variables
 var direction: float = 0
+var final_direction: int = 1 # for player's look direction
 var jump_allowed: bool = true
 
 
@@ -38,12 +36,11 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("jump") and is_on_floor(): # check for jump
+	if Input.is_action_just_pressed("jump") and jump_allowed: # check for jump
 		state = PlayerStateMachine.JUMP
 	# check if attack pressed
 	elif Input.is_action_just_pressed("attack") \
 		and state != PlayerStateMachine.ATTACK: # check if attacking
-			print(state)
 			state = PlayerStateMachine.ATTACK
 
 
@@ -63,8 +60,8 @@ func _physics_process(delta: float) -> void:
 	if !is_on_floor(): # basic gravity
 		if coyot_jump_timer.time_left == 0: # coyot jumpt for better UE
 			coyot_jump_timer.start()
-		velocity.y += clamp(gravity*delta, VELOCITY_Y_MIN, \
-											VELOCITY_Y_MAX)
+		velocity.y += clamp(Globals.gravity*delta, Globals.VELOCITY_Y_MIN, \
+											Globals.VELOCITY_Y_MAX)
 	
 	move_and_slide()
 
@@ -74,7 +71,8 @@ func move_state(delta: float):
 												# and better animation
 	
 	if direction != 0: # if pressing move buttons (left/right)
-		set_look(direction) # set player's look direction
+		final_direction = direction
+		set_look(final_direction) # set player's look direction
 		if is_on_floor(): # check for animation and jump variable
 			animation_player.play("move")
 			jump_allowed = true
@@ -95,7 +93,7 @@ func jump_state(delta: float):
 
 # attack state
 func attack_state(delta: float):
-	velocity.x = ATTACK_PUSH_SPEED*delta*animated_sprite_2d.scale.x/abs(animated_sprite_2d.scale.x)
+	velocity.x = ATTACK_PUSH_SPEED*delta*final_direction
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "velocity:x", 0,\
 	 0.2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)

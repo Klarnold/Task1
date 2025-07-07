@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bgfvekfylnh0m"]
+[gd_scene load_steps=6 format=4 uid="uid://bgfvekfylnh0m"]
 
 [ext_resource type="PackedScene" uid="uid://cakrc4b16nq1t" path="res://elements/tileMapLayers/world_tile_layer.tscn" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://b5p0rho8ugx7q" path="res://elements/platforms/simple_platform.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://773bd1g0y4x" path="res://elements/platforms/moving_platform.tscn" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://cqncmy8dbn1pc" path="res://elements/player/player.tscn" id="4_kelw5"]
+[ext_resource type="PackedScene" uid="uid://sttnuxa5d1cw" path="res://elements/enemies/slime.tscn" id="5_lfrn8"]
 
 [node name="Game" type="Node2D"]
 
@@ -48,3 +49,9 @@ scale = Vector2(5, 5)
 [node name="Player" parent="." instance=ExtResource("4_kelw5")]
 position = Vector2(209, 299)
 scale = Vector2(3.18814, 2.95465)
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Slime" parent="Node" instance=ExtResource("5_lfrn8")]
+position = Vector2(963, 258)
+scale = Vector2(4.01221, 2.85705)

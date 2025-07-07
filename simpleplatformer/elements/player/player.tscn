@@ -604,10 +604,8 @@ libraries = {
 [node name="DamageBox" type="Node2D" parent="."]
 
 [node name="HitBoxArea" type="Area2D" parent="DamageBox"]
-position = Vector2(0, 3)
 
 [node name="HitBoxShape" type="CollisionPolygon2D" parent="DamageBox/HitBoxArea"]
-position = Vector2(0, -3)
 polygon = PackedVector2Array(1, 14, 8, 12, 10, 5, 8, -2, 0, 1)
 
 [node name="HurtBoxArea" type="Area2D" parent="DamageBox"]
@@ -621,6 +619,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+enabled = false
 zoom = Vector2(1.5, 1.5)
 process_callback = 0
 limit_left = 0
