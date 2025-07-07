@@ -36,6 +36,9 @@ func _ready() -> void:
 	# connecting signals
 	coyot_jump_timer.timeout.connect(_on_coyot_jump_timer_timeout)
 	hit_box_area.area_entered.connect(_on_hit_box_area_area_entered)
+	
+	# setting variables
+	Globals.player = self
 
 
 func _input(event: InputEvent) -> void:

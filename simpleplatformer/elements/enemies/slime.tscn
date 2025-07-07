@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://sttnuxa5d1cw"]
+[gd_scene load_steps=23 format=3 uid="uid://sttnuxa5d1cw"]
 
 [ext_resource type="Script" uid="uid://btd71j2dxi8p8" path="res://scripts/elements/enemis/slime.gd" id="1_mo4h8"]
 [ext_resource type="Texture2D" uid="uid://lrm8cqpdwttn" path="res://assets/sprites/slime_green.png" id="2_llyuw"]
@@ -279,6 +279,9 @@ _data = {
 &"move": SubResource("Animation_1w1ih")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_mo4h8"]
+radius = 60.2993
+
 [node name="Slime" type="CharacterBody2D"]
 script = ExtResource("1_mo4h8")
 
@@ -316,3 +319,13 @@ collision_mask = 0
 
 [node name="HurtBoxShape" type="CollisionPolygon2D" parent="DamageBox/HurtBoxArea"]
 polygon = PackedVector2Array(-7, 0, -7, -4, -6, -4, -6, -5, -5, -5, -5, -11, 5, -11, 5, -5, 6, -5, 6, -4, 7, -4, 7, 0)
+
+[node name="ChaseArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="ChaseShape" type="CollisionShape2D" parent="ChaseArea"]
+shape = SubResource("CircleShape2D_mo4h8")
+
+[node name="ChaseTimer" type="Timer" parent="."]
+one_shot = true

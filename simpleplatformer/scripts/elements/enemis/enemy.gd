@@ -13,10 +13,10 @@ var animated_sprite_2d: AnimatedSprite2D
 var animation_player: AnimationPlayer
 var damage_box: Node2D
 var hurt_box_area: Area2D
+var chase_area: Area2D
 
 
 func _ready() -> void:
-	print("enemy")
 	# this all required for catching errors because of the composition issues
 	if check_node("AnimatedSprite2D"):
 		return
@@ -37,6 +37,10 @@ func _ready() -> void:
 	if check_node("DamageBox/HurtBoxArea"):
 		return
 	hurt_box_area = $DamageBox/HurtBoxArea
+	
+	if check_node("ChaseArea"):
+		return
+	chase_area = $ChaseArea
 
 
 func _physics_process(delta: float) -> void:
@@ -61,8 +65,10 @@ func move_state(delta: float):
 	if !edge_checker_ray_cast.is_colliding() and is_on_floor():
 		set_direction(-direction)
 	animation_player.play("move")
-	if chase:
-		pass
+	if chase and Globals.player:
+		set_direction(-Globals.get_direction(Globals.player.position, position))
+		velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
+	 	Globals.ENEMY_MAX_SPEED*direction*Globals.CHASE_SPEED_MODIFIER, 0.8)
 	else:
 		velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
 	 	Globals.ENEMY_MAX_SPEED*direction, 0.8)
@@ -121,3 +127,9 @@ func set_direction(_direction: int):
 	animated_sprite_2d.scale.x = abs(animated_sprite_2d.scale.x)*direction
 	damage_box.scale.x = abs(damage_box.scale.x)*direction
 	edge_checker_ray_cast.scale.x = abs(edge_checker_ray_cast.scale.x)*direction
+
+
+func _exit_tree() -> void:
+	# required to escape queue_free() issues when signals are connected to
+	# the null instance
+	pass
