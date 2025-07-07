@@ -6,7 +6,8 @@ class_name Enemy
 @onready var direction: int = 1 
 @onready var health: int = 3
 @onready var chase: bool = false
-
+@onready var cooldown: bool = false 
+@onready var is_attacking: bool = false
 
 var edge_checker_ray_cast: RayCast2D
 var animated_sprite_2d: AnimatedSprite2D
@@ -14,7 +15,7 @@ var animation_player: AnimationPlayer
 var damage_box: Node2D
 var hurt_box_area: Area2D
 var chase_area: Area2D
-
+var cooldown_timer: Timer
 
 func _ready() -> void:
 	# this all required for catching errors because of the composition issues
@@ -41,13 +42,17 @@ func _ready() -> void:
 	if check_node("ChaseArea"):
 		return
 	chase_area = $ChaseArea
+	
+	if check_node("CooldownTimer"):
+		return
+	cooldown_timer = $CooldownTimer
 
 
 func _physics_process(delta: float) -> void:
 	match state:
 		Globals.EnemyStateMachine.MOVE:
 			move_state(delta)
-		Globals.EnemyStateMachine.ATACK:
+		Globals.EnemyStateMachine.ATTACK:
 			attack_state()
 		Globals.EnemyStateMachine.DAMAGED:
 			damaged_state(delta)
@@ -66,16 +71,28 @@ func move_state(delta: float):
 		set_direction(-direction)
 	animation_player.play("move")
 	if chase and Globals.player:
-		set_direction(-Globals.get_direction(Globals.player.position, position))
-		velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
-	 	Globals.ENEMY_MAX_SPEED*direction*Globals.CHASE_SPEED_MODIFIER, 0.8)
+		if abs(Globals.player.position.x - position.x) > 20:
+			print("chase") 
+			set_direction(-Globals.get_direction(Globals.player.position, position))
+			velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
+		 	Globals.ENEMY_MAX_SPEED*direction*Globals.CHASE_SPEED_MODIFIER, 0.8)
 	else:
 		velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
 	 	Globals.ENEMY_MAX_SPEED*direction, 0.8)
 
 
 func attack_state():
-	pass
+	if !is_attacking:
+		is_attacking = true
+		velocity.x = 0
+		cooldown = true
+		animation_player.play("attack")
+		await animation_player.animation_finished
+		print(state)
+		if has_node("CooldownTimer"):
+			cooldown_timer.start()
+		is_attacking = false
+		state = Globals.EnemyStateMachine.MOVE
 
 
 func damaged_state(delta: float):
@@ -89,17 +106,9 @@ func death_state():
 	set_physics_process(false) # stops state management
 	velocity.x = 0
 	animation_player.play("death")
-	disable_all(self)
+	Globals.disable_all(self)
 	await animation_player.animation_finished
 	queue_free()
-
-
-func disable_all(main_node: Node):
-	if "disabled" in main_node:
-		print(main_node.name)
-		main_node.disabled = true
-	for node in main_node.get_children():
-		disable_all(node)
 
 
 #func take_damage():

@@ -22,6 +22,7 @@ const ATTACK_PUSH_SPEED: float = 14000
 @onready var damage_box: Node2D = $DamageBox
 @onready var hurt_box_area: Area2D = $DamageBox/HurtBoxArea
 @onready var hit_box_area: Area2D = $DamageBox/HitBoxArea
+@onready var hit_box_shape: CollisionPolygon2D = $DamageBox/HitBoxArea/HitBoxShape
 
 # onready variables
 @onready var state: PlayerStateMachine = PlayerStateMachine.MOVE
@@ -39,6 +40,9 @@ func _ready() -> void:
 	
 	# setting variables
 	Globals.player = self
+	
+	#setting local tree nodes
+	hit_box_shape.disabled = true
 
 
 func _input(event: InputEvent) -> void:
@@ -102,7 +106,7 @@ func attack_state(delta: float):
 	velocity.x = ATTACK_PUSH_SPEED*delta*final_direction
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(self, "velocity:x", 0,\
-	 0.2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_OUT)
+	 0.2).set_trans(Tween.TRANS_CIRC).set_ease(Tween.EASE_IN)
 	animation_player.play("attack")
 	await animation_player.animation_finished
 	state = PlayerStateMachine.MOVE
