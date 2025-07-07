@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://bgfvekfylnh0m"]
+[gd_scene load_steps=5 format=4 uid="uid://bgfvekfylnh0m"]
 
 [ext_resource type="PackedScene" uid="uid://cakrc4b16nq1t" path="res://elements/tileMapLayers/world_tile_layer.tscn" id="1_sul5r"]
 [ext_resource type="PackedScene" uid="uid://b5p0rho8ugx7q" path="res://elements/platforms/simple_platform.tscn" id="2_7h61r"]
 [ext_resource type="PackedScene" uid="uid://773bd1g0y4x" path="res://elements/platforms/moving_platform.tscn" id="3_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://cqncmy8dbn1pc" path="res://elements/player/player.tscn" id="4_kelw5"]
 
 [node name="Game" type="Node2D"]
 
@@ -43,3 +44,7 @@ text = "FINISH"
 [node name="MovingPlatform" parent="Platforms" instance=ExtResource("3_0sr1o")]
 position = Vector2(91, 62)
 scale = Vector2(5, 5)
+
+[node name="Player" parent="." instance=ExtResource("4_kelw5")]
+position = Vector2(209, 299)
+scale = Vector2(3.18814, 2.95465)
