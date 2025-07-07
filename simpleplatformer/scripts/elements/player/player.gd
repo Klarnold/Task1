@@ -20,6 +20,8 @@ const ATTACK_PUSH_SPEED: float = 14000
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var coyot_jump_timer: Timer = $CoyotJumpTimer
 @onready var damage_box: Node2D = $DamageBox
+@onready var hurt_box_area: Area2D = $DamageBox/HurtBoxArea
+@onready var hit_box_area: Area2D = $DamageBox/HitBoxArea
 
 # onready variables
 @onready var state: PlayerStateMachine = PlayerStateMachine.MOVE
@@ -33,6 +35,7 @@ var jump_allowed: bool = true
 func _ready() -> void:
 	# connecting signals
 	coyot_jump_timer.timeout.connect(_on_coyot_jump_timer_timeout)
+	hit_box_area.area_entered.connect(_on_hit_box_area_area_entered)
 
 
 func _input(event: InputEvent) -> void:
@@ -105,6 +108,10 @@ func attack_state(delta: float):
 func set_look(_direction):
 	animated_sprite_2d.scale.x = _direction
 	damage_box.scale.x = _direction
+
+
+func _on_hit_box_area_area_entered(object_area: Area2D):
+	Signals.emit_signal("enemy_is_hitted", object_area, position, 1)
 
 
 func _on_coyot_jump_timer_timeout():

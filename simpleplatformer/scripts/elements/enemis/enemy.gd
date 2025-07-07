@@ -1,54 +1,53 @@
 extends CharacterBody2D
 class_name Enemy
 
-enum EnemyStateMachine{
-	MOVE,
-	ATACK,
-	CHASE,
-	DAMAGED,
-	DEATH
-}
 
-
-@onready var state: EnemyStateMachine = EnemyStateMachine.MOVE
+@onready var state: Globals.EnemyStateMachine = Globals.EnemyStateMachine.MOVE
 @onready var direction: int = 1 
+@onready var health: int = 3
+@onready var chase: bool = false
 
 
 var edge_checker_ray_cast: RayCast2D
 var animated_sprite_2d: AnimatedSprite2D
 var animation_player: AnimationPlayer
 var damage_box: Node2D
+var hurt_box_area: Area2D
 
 
 func _ready() -> void:
-	# this all required for catching errors because of the composition issues 
-	if !has_node("AnimatedSprite2D"):
-		printerr("%s has no %s, this node was freed" % [name, "AnimatedSprite2D"])
-		queue_free()
+	print("enemy")
+	# this all required for catching errors because of the composition issues
+	if check_node("AnimatedSprite2D"):
+		return
 	animated_sprite_2d = $AnimatedSprite2D
-	if !has_node("AnimationPlayer"):
-		printerr("%s has no %s, this node was freed" % [name, "AnimationPlayer"])
-		queue_free()
+	
+	if check_node("AnimationPlayer"):
+		return
 	animation_player = $AnimationPlayer
-	if !has_node("DamageBox"):
-		printerr("%s has no %s, this node was freed" % [name, "DamageBox"])
-		queue_free()
+	
+	if check_node("AnimatedSprite2D"):
+		return
 	damage_box = $DamageBox
-	if  has_node("DamageBox/EdgeCheckerRayCast"):
-		edge_checker_ray_cast = $DamageBox/EdgeCheckerRayCast
+	
+	if check_node("DamageBox/EdgeCheckerRayCast"):
+		return
+	edge_checker_ray_cast = $DamageBox/EdgeCheckerRayCast
+	
+	if check_node("DamageBox/HurtBoxArea"):
+		return
+	hurt_box_area = $DamageBox/HurtBoxArea
 
 
 func _physics_process(delta: float) -> void:
 	match state:
-		EnemyStateMachine.MOVE:
+		Globals.EnemyStateMachine.MOVE:
 			move_state(delta)
-		EnemyStateMachine.ATACK:
+		Globals.EnemyStateMachine.ATACK:
 			attack_state()
-		EnemyStateMachine.CHASE:
-			chase_state()
-		EnemyStateMachine.DAMAGED:
-			damaged_state()
-		EnemyStateMachine.DEATH:
+		Globals.EnemyStateMachine.DAMAGED:
+			damaged_state(delta)
+		Globals.EnemyStateMachine.DEATH:
 			death_state()
 	
 	if !is_on_floor():
@@ -62,24 +61,57 @@ func move_state(delta: float):
 	if !edge_checker_ray_cast.is_colliding() and is_on_floor():
 		set_direction(-direction)
 	animation_player.play("move")
-	velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
-	 Globals.ENEMY_MAX_SPEED*direction, 0.8)
+	if chase:
+		pass
+	else:
+		velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
+	 	Globals.ENEMY_MAX_SPEED*direction, 0.8)
 
 
 func attack_state():
 	pass
 
 
-func chase_state():
-	pass
-
-
-func damaged_state():
-	pass
+func damaged_state(delta: float):
+	velocity.x = 0
+	animation_player.play("damaged")
+	await animation_player.animation_finished
+	state = Globals.EnemyStateMachine.MOVE
 
 
 func death_state():
-	pass
+	set_physics_process(false) # stops state management
+	velocity.x = 0
+	animation_player.play("death")
+	disable_all(self)
+	await animation_player.animation_finished
+	queue_free()
+
+
+func disable_all(main_node: Node):
+	if "disabled" in main_node:
+		print(main_node.name)
+		main_node.disabled = true
+	for node in main_node.get_children():
+		disable_all(node)
+
+
+#func take_damage():
+	#health -= 1
+	#if health <= 0:
+		#health = 0
+		#state = Globals.EnemyStateMachine.DEATH
+	#else:
+		#state = Globals.EnemyStateMachine.DAMAGED
+
+
+func check_node(node_path: String):
+	if has_node(node_path):
+		return false
+	printerr("%s has no %s, this node was freed" % [name, node_path])
+	queue_free()
+	set_physics_process(false)
+	return true
 
 
 func set_direction(_direction: int):

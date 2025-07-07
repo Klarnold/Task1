@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://sttnuxa5d1cw"]
+[gd_scene load_steps=22 format=3 uid="uid://sttnuxa5d1cw"]
 
 [ext_resource type="Script" uid="uid://btd71j2dxi8p8" path="res://scripts/elements/enemis/slime.gd" id="1_mo4h8"]
 [ext_resource type="Texture2D" uid="uid://lrm8cqpdwttn" path="res://assets/sprites/slime_green.png" id="2_llyuw"]
@@ -214,6 +214,18 @@ tracks/1/keys = {
 "update": 1,
 "values": ["death"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_1w1ih"]
 length = 0.6
@@ -243,8 +255,24 @@ tracks/1/keys = {
 "values": ["move"]
 }
 
+[sub_resource type="Animation" id="Animation_mlg68"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mlg68"]
 _data = {
+&"RESET": SubResource("Animation_mlg68"),
 &"attack": SubResource("Animation_mo4h8"),
 &"damaged": SubResource("Animation_llyuw"),
 &"death": SubResource("Animation_nivw5"),
@@ -257,7 +285,7 @@ script = ExtResource("1_mo4h8")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_qwfa6")
-animation = &"attack"
+animation = &"death"
 autoplay = "move"
 
 [node name="PhysicShape" type="CollisionPolygon2D" parent="."]
@@ -275,12 +303,16 @@ position = Vector2(7, -1)
 target_position = Vector2(0, 5)
 
 [node name="HitBoxArea" type="Area2D" parent="DamageBox"]
+collision_layer = 0
+collision_mask = 2
 
 [node name="HitBoxShape" type="CollisionPolygon2D" parent="DamageBox/HitBoxArea"]
 position = Vector2(0, 1)
 polygon = PackedVector2Array(5, -8, 11, -13, 11, -1, 5, 1)
 
 [node name="HurtBoxArea" type="Area2D" parent="DamageBox"]
+collision_layer = 4
+collision_mask = 0
 
 [node name="HurtBoxShape" type="CollisionPolygon2D" parent="DamageBox/HurtBoxArea"]
 polygon = PackedVector2Array(-7, 0, -7, -4, -6, -4, -6, -5, -5, -5, -5, -11, 5, -11, 5, -5, 6, -5, 6, -4, 7, -4, 7, 0)

@@ -586,6 +586,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 0
 floor_constant_speed = true
 script = ExtResource("1_lh3fu")
 
@@ -604,11 +605,15 @@ libraries = {
 [node name="DamageBox" type="Node2D" parent="."]
 
 [node name="HitBoxArea" type="Area2D" parent="DamageBox"]
+collision_layer = 0
+collision_mask = 4
 
 [node name="HitBoxShape" type="CollisionPolygon2D" parent="DamageBox/HitBoxArea"]
 polygon = PackedVector2Array(1, 14, 8, 12, 10, 5, 8, -2, 0, 1)
 
 [node name="HurtBoxArea" type="Area2D" parent="DamageBox"]
+collision_layer = 2
+collision_mask = 0
 
 [node name="HurtBoxShape" type="CollisionPolygon2D" parent="DamageBox/HurtBoxArea"]
 position = Vector2(0, 4)

@@ -31,27 +31,27 @@ text = "START"
 [node name="FinishPlatform" type="Node" parent="Platforms"]
 
 [node name="SimplePlatform" parent="Platforms/FinishPlatform" instance=ExtResource("2_7h61r")]
-position = Vector2(958, 302)
+position = Vector2(967, 369)
 scale = Vector2(12.0967, 3.91985)
 
 [node name="Label" type="Label" parent="Platforms/FinishPlatform"]
-offset_left = 909.0
-offset_top = 314.0
-offset_right = 998.0
-offset_bottom = 356.0
+offset_left = 918.0
+offset_top = 381.0
+offset_right = 1015.0
+offset_bottom = 423.0
 theme_override_font_sizes/font_size = 30
 text = "FINISH"
 
 [node name="MovingPlatform" parent="Platforms" instance=ExtResource("3_0sr1o")]
-position = Vector2(91, 62)
+position = Vector2(24, 64)
 scale = Vector2(5, 5)
 
 [node name="Player" parent="." instance=ExtResource("4_kelw5")]
-position = Vector2(209, 299)
+position = Vector2(504, 560)
 scale = Vector2(3.18814, 2.95465)
 
 [node name="Node" type="Node" parent="."]
 
 [node name="Slime" parent="Node" instance=ExtResource("5_lfrn8")]
-position = Vector2(963, 258)
+position = Vector2(776, 584)
 scale = Vector2(4.01221, 2.85705)
