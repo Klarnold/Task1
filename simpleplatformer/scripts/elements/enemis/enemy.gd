@@ -4,7 +4,7 @@ class_name Enemy
 
 @onready var state: Globals.EnemyStateMachine = Globals.EnemyStateMachine.MOVE
 @onready var direction: int = 1 
-@onready var health: int = 3
+@onready var health: float = Globals.ENEMY_MAX_HEALTH
 @onready var chase: bool = false
 @onready var cooldown: bool = false 
 @onready var is_attacking: bool = false
@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		Globals.EnemyStateMachine.ATTACK:
 			attack_state()
 		Globals.EnemyStateMachine.DAMAGED:
-			damaged_state(delta)
+			damaged_state()
 		Globals.EnemyStateMachine.DEATH:
 			death_state()
 	
@@ -71,8 +71,7 @@ func move_state(delta: float):
 		set_direction(-direction)
 	animation_player.play("move")
 	if chase and Globals.player:
-		if abs(Globals.player.position.x - position.x) > 20:
-			print("chase") 
+		if abs(Globals.player.position.x - position.x) > 30:
 			set_direction(-Globals.get_direction(Globals.player.position, position))
 			velocity.x = lerp(velocity.x + Globals.ENEMY_SPEED*delta*direction, \
 		 	Globals.ENEMY_MAX_SPEED*direction*Globals.CHASE_SPEED_MODIFIER, 0.8)
@@ -88,14 +87,13 @@ func attack_state():
 		cooldown = true
 		animation_player.play("attack")
 		await animation_player.animation_finished
-		print(state)
 		if has_node("CooldownTimer"):
 			cooldown_timer.start()
 		is_attacking = false
 		state = Globals.EnemyStateMachine.MOVE
 
 
-func damaged_state(delta: float):
+func damaged_state():
 	velocity.x = 0
 	animation_player.play("damaged")
 	await animation_player.animation_finished
