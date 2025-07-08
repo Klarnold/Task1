@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://dgr168fe78lwt"]
+
+[node name="HealthCell" type="ColorRect"]
+custom_minimum_size = Vector2(20, 30)
+color = Color(0.767591, 0.0473173, 1.05888e-06, 1)

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b6tupfr8mxu2p"]
+
+[node name="DamageBox" type="Node2D"]
+
+[node name="HitBoxArea" type="Area2D" parent="."]
+position = Vector2(0, 3)
+
+[node name="HitBoxShape" type="CollisionPolygon2D" parent="HitBoxArea"]
+position = Vector2(0, 1)
+
+[node name="HurtBoxArea" type="Area2D" parent="."]
+
+[node name="HurtBoxShape" type="CollisionPolygon2D" parent="HurtBoxArea"]

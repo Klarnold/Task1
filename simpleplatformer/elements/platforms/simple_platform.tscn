@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5p0rho8ugx7q"]
+
+[ext_resource type="Texture2D" uid="uid://c0lwipbeb0ap7" path="res://assets/sprites/platforms.png" id="1_8jsr0"]
+
+[node name="SimplePlatform" type="StaticBody2D"]
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8jsr0")
+hframes = 4
+vframes = 5
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-7, -6, 7, -6, 7, 2, -7, 2)
