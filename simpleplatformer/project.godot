@@ -19,9 +19,11 @@ config/icon="res://icon.svg"
 
 Globals="*res://scripts/globals/Globals.gd"
 Signals="*res://scripts/globals/Signals.gd"
+GlobalUi="*res://elements/UI/GlobalUI.tscn"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="viewport"
 
 [dotnet]

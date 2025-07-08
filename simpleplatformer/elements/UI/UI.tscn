@@ -42,4 +42,4 @@ theme_override_constants/separation = 15
 
 [node name="EnemyCounter" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "adasdd"
+text = "Here's enemy kiled count"

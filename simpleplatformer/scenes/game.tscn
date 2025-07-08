@@ -170,3 +170,11 @@ scale = Vector2(3.18814, 2.95465)
 [node name="Slime" parent="Node" instance=ExtResource("7_kvuet")]
 position = Vector2(288, 480)
 scale = Vector2(4.01221, 2.85705)
+
+[node name="Slime2" parent="Node" instance=ExtResource("7_kvuet")]
+position = Vector2(560, 472)
+scale = Vector2(4.01221, 2.85705)
+
+[node name="Slime3" parent="Node" instance=ExtResource("7_kvuet")]
+position = Vector2(760, 472)
+scale = Vector2(4.01221, 2.85705)
