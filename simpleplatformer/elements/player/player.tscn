@@ -1,7 +1,8 @@
-[gd_scene load_steps=52 format=3 uid="uid://cqncmy8dbn1pc"]
+[gd_scene load_steps=53 format=3 uid="uid://cqncmy8dbn1pc"]
 
 [ext_resource type="Texture2D" uid="uid://c1738vq0p60xp" path="res://assets/sprites/knight.png" id="1_ktrpi"]
 [ext_resource type="Script" uid="uid://mmvsxj1w7cx6" path="res://scripts/elements/player/player.gd" id="1_lh3fu"]
+[ext_resource type="PackedScene" uid="uid://dsmt1f5k5b22q" path="res://elements/UI/UI.tscn" id="3_lgvkd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ktrpi"]
 atlas = ExtResource("1_ktrpi")
@@ -617,7 +618,7 @@ collision_mask = 0
 
 [node name="HurtBoxShape" type="CollisionPolygon2D" parent="DamageBox/HurtBoxArea"]
 position = Vector2(0, 4)
-polygon = PackedVector2Array(3, 7, 4, 2, 3, -3, -4, -3, -5, 2, -4, 7)
+polygon = PackedVector2Array(2, 7, 1, 2, 2, -3, -4, -3, -3, 2, -4, 7)
 
 [node name="CoyotJumpTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -633,3 +634,5 @@ limit_bottom = 648
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
+
+[node name="Ui" parent="." instance=ExtResource("3_lgvkd")]

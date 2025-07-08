@@ -23,6 +23,7 @@ const ATTACK_PUSH_SPEED: float = 14000
 @onready var hurt_box_area: Area2D = $DamageBox/HurtBoxArea
 @onready var hit_box_area: Area2D = $DamageBox/HitBoxArea
 @onready var hit_box_shape: CollisionPolygon2D = $DamageBox/HitBoxArea/HitBoxShape
+@onready var hurt_box_shape: CollisionPolygon2D = $DamageBox/HurtBoxArea/HurtBoxShape
 
 # onready variables
 @onready var state: PlayerStateMachine = PlayerStateMachine.MOVE
@@ -49,6 +50,12 @@ func _ready() -> void:
 	
 	#setting local tree nodes
 	hit_box_shape.disabled = true
+	
+	
+	await get_tree().physics_frame # it needs to be ensure that all changes will 
+								   # be made in the next frame after player's
+								   # initialization
+	Signals.emit_signal("player_is_ready")
 
 
 func _input(_event: InputEvent) -> void:
@@ -136,6 +143,7 @@ func death_state():
 	Globals.disable_all(self)
 	animation_player.play("death")
 	await animation_player.animation_finished
+	Signals.emit_signal("player_is_dead")
 	queue_free()
 
 
@@ -145,7 +153,6 @@ func set_look(_direction):
 
 
 func take_damage(enemy_pos: Vector2, enemy_damage: float):
-	print("damaged")
 	if invisible:
 		return
 	attacked_pos = enemy_pos
@@ -154,15 +161,19 @@ func take_damage(enemy_pos: Vector2, enemy_damage: float):
 		state = PlayerStateMachine.DEATH
 	else:
 		health -= enemy_damage
+		Signals.emit_signal("player_is_damaged", enemy_damage)
 		state = PlayerStateMachine.DAMAGED
 
 
 func invisible_anim(time: float):
+	invisible = true
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 0, 0.3)
 	tween.tween_property(animated_sprite_2d, "self_modulate:a", 1, 0.3)
 	tween.set_loops()
 	await get_tree().create_timer(time).timeout
+	hurt_box_shape.disabled = true
+	hurt_box_shape.disabled = false
 	animated_sprite_2d.self_modulate.a = 1
 	invisible = false
 	tween.kill()

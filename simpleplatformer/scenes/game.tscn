@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=4 uid="uid://bgfvekfylnh0m"]
+[gd_scene load_steps=13 format=4 uid="uid://bgfvekfylnh0m"]
 
-[ext_resource type="PackedScene" uid="uid://cakrc4b16nq1t" path="res://elements/tileMapLayers/world_tile_layer.tscn" id="1_sul5r"]
-[ext_resource type="PackedScene" uid="uid://b5p0rho8ugx7q" path="res://elements/platforms/simple_platform.tscn" id="2_7h61r"]
-[ext_resource type="Script" uid="uid://bctb3qtt13ktc" path="res://scripts/elements/platforms/moving_platform.gd" id="3_5i0tg"]
-[ext_resource type="Texture2D" uid="uid://c0lwipbeb0ap7" path="res://assets/sprites/platforms.png" id="4_bdhmt"]
-[ext_resource type="PackedScene" uid="uid://cqncmy8dbn1pc" path="res://elements/player/player.tscn" id="4_kelw5"]
-[ext_resource type="PackedScene" uid="uid://sttnuxa5d1cw" path="res://elements/enemies/slime.tscn" id="5_lfrn8"]
+[ext_resource type="Script" uid="uid://b0pwnm4lteqsw" path="res://scripts/scenes/game.gd" id="1_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://cakrc4b16nq1t" path="res://elements/tileMapLayers/world_tile_layer.tscn" id="2_gee14"]
+[ext_resource type="PackedScene" uid="uid://b5p0rho8ugx7q" path="res://elements/platforms/simple_platform.tscn" id="3_0tnpc"]
+[ext_resource type="Script" uid="uid://bctb3qtt13ktc" path="res://scripts/elements/platforms/moving_platform.gd" id="4_vtaks"]
+[ext_resource type="Texture2D" uid="uid://c0lwipbeb0ap7" path="res://assets/sprites/platforms.png" id="5_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://cqncmy8dbn1pc" path="res://elements/player/player.tscn" id="6_dinhu"]
+[ext_resource type="PackedScene" uid="uid://sttnuxa5d1cw" path="res://elements/enemies/slime.tscn" id="7_kvuet"]
 
 [sub_resource type="Curve2D" id="Curve2D_5i0tg"]
 _data = {
@@ -59,8 +60,9 @@ _data = {
 point_count = 2
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_u5sy4")
 
-[node name="WorldTileLayer" parent="." instance=ExtResource("1_sul5r")]
+[node name="WorldTileLayer" parent="." instance=ExtResource("2_gee14")]
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAAAABMAAAABAAEAAAAAABIAAAABAAEAAAAAABEAAAABAAEAAAAAABAAAAABAAEAAAAAAA8AAAABAAEAAAAAAA4AAAABAAEAAAAAAA0AAAABAAEAAAAAAAwAAAABAAEAAAAAAAsAAAABAAEAAAAAAAoAAAABAAEAAAAAAAkAAAABAAEAAAAAAAgAAAABAAEAAAAAAAcAAAABAAEAAAAAAAYAAAABAAEAAAAAAAUAAAABAAEAAAAAAAQAAAABAAEAAAAAAAMAAAABAAEAAAAAAAIAAAABAAEAAAAAAAEAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAEAAAACAAAAAAABAAEAAAADAAAAAAABAAEAAAAEAAAAAAABAAEAAAAFAAAAAAABAAEAAAAGAAAAAAABAAEAAAAHAAAAAAABAAEAAAAIAAAAAAABAAEAAAAJAAAAAAABAAEAAAAKAAAAAAABAAEAAAALAAAAAAABAAEAAAAMAAAAAAABAAEAAAANAAAAAAABAAEAAAAOAAAAAAABAAEAAAAPAAAAAAABAAEAAAAQAAAAAAABAAEAAAARAAAAAAABAAEAAAASAAAAAAABAAEAAAATAAAAAAABAAEAAAAUAAAAAAABAAEAAAAVAAAAAAABAAEAAAAWAAAAAAABAAEAAAAXAAAAAAABAAEAAAAYAAAAAAABAAEAAAAZAAAAAAABAAEAAAAaAAAAAAABAAEAAAAbAAAAAAABAAEAAAAcAAAAAAABAAEAAAAdAAAAAAABAAEAAAAeAAAAAAABAAEAAAAfAAAAAAABAAEAAAAgAAAAAAABAAEAAAAhAAAAAAABAAEAAAAiAAAAAAABAAEAAAAjAAAAAAABAAEAAAAjAAEAAAABAAEAAAAjAAIAAAABAAEAAAAjAAMAAAABAAEAAAAjAAQAAAABAAEAAAAjAAUAAAABAAEAAAAjAAYAAAABAAEAAAAjAAcAAAABAAEAAAAjAAgAAAABAAEAAAAjAAkAAAABAAEAAAAjAAoAAAABAAEAAAAjAAsAAAABAAEAAAAjAAwAAAABAAEAAAAjAA0AAAABAAEAAAAjAA4AAAABAAEAAAAjAA8AAAABAAEAAAAjABAAAAABAAEAAAAjABEAAAABAAEAAAAjABIAAAABAAEAAAAjABMAAAABAAEAAAAiABMAAAABAAEAAAAhABMAAAABAAEAAAAgABMAAAABAAEAAAAfABMAAAABAAEAAAAeABMAAAABAAEAAAAdABMAAAABAAEAAAAcABMAAAABAAEAAAAbABMAAAABAAEAAAAaABMAAAABAAEAAAAZABMAAAABAAEAAAAYABMAAAABAAEAAAAXABMAAAABAAEAAAAWABMAAAABAAEAAAAVABMAAAABAAEAAAAUABMAAAABAAEAAAATABMAAAABAAEAAAASABMAAAABAAEAAAARABMAAAABAAEAAAAQABMAAAABAAEAAAAPABMAAAABAAEAAAAOABMAAAABAAEAAAANABMAAAABAAEAAAAMABMAAAABAAEAAAALABMAAAABAAEAAAAKABMAAAABAAEAAAAJABMAAAABAAEAAAAIABMAAAABAAEAAAAHABMAAAABAAEAAAAGABMAAAABAAEAAAAFABMAAAABAAEAAAAEABMAAAABAAEAAAADABMAAAABAAEAAAACABMAAAABAAEAAAABABMAAAABAAEAAAAIABIAAAABAAAAAAAFABAAAAABAAAAAAAEAA8AAAABAAAAAAADAA4AAAABAAEAAAACAA4AAAABAAEAAAABAA0AAAABAAEAAAAGABEAAAABAAEAAAAHABEAAAABAAEAAAABAA4AAAABAAEAAAABAA8AAAABAAEAAAABABAAAAABAAAAAAACABAAAAABAAAAAAACABEAAAABAAEAAAADABEAAAAAAAEAAAADABIAAAABAAAAAAAEABIAAAABAAEAAAAFABIAAAABAAEAAAAGABIAAAAAAAEAAAAHABIAAAAAAAEAAAAEABEAAAABAAEAAAADABAAAAABAAAAAAADAA8AAAABAAEAAAAEABAAAAABAAEAAAAFABEAAAABAAAAAAACABIAAAABAAEAAAACAA8AAAABAAEAAAABABEAAAABAAEAAAABABIAAAABAAAAAAALAA8AAAABAAAAAAAMAA8AAAABAAAAAAANAA8AAAABAAAAAAAOAA8AAAABAAEAAAAPAA8AAAABAAAAAAAQAA8AAAAAAAEAAAARAA8AAAABAAEAAAASAA8AAAABAAAAAAATAA8AAAAAAAEAAAAUAA8AAAABAAAAAAAVAA8AAAABAAAAAAAWAA8AAAABAAEAAAAXAA8AAAABAAAAAAAYAA8AAAABAAEAAAAZAA8AAAABAAEAAAAaAA8AAAABAAEAAAAbAA8AAAABAAAAAAAcAA8AAAABAAEAAAAdAA8AAAABAAAAAAAeAA8AAAABAAAAAAAfAA8AAAABAAEAAAAgAA8AAAABAAEAAAAhAA8AAAABAAAAAAAIAA8AAAAAAAEAAAAJAA8AAAABAAEAAAAKAA8AAAABAAAAAAA=")
 
@@ -68,7 +70,7 @@ tile_map_data = PackedByteArray("AAAAABMAAAABAAEAAAAAABIAAAABAAEAAAAAABEAAAABAAE
 
 [node name="StartPlatform" type="Node" parent="Platforms"]
 
-[node name="StartingPlatform" parent="Platforms/StartPlatform" instance=ExtResource("2_7h61r")]
+[node name="StartingPlatform" parent="Platforms/StartPlatform" instance=ExtResource("3_0tnpc")]
 position = Vector2(212, 370)
 scale = Vector2(7.48893, 4.042)
 
@@ -82,7 +84,7 @@ text = "START"
 
 [node name="FinishPlatform" type="Node" parent="Platforms"]
 
-[node name="SimplePlatform" parent="Platforms/FinishPlatform" instance=ExtResource("2_7h61r")]
+[node name="SimplePlatform" parent="Platforms/FinishPlatform" instance=ExtResource("3_0tnpc")]
 position = Vector2(967, 369)
 scale = Vector2(12.0967, 3.91985)
 
@@ -98,7 +100,7 @@ text = "FINISH"
 position = Vector2(8, -136)
 scale = Vector2(5, 5)
 curve = SubResource("Curve2D_5i0tg")
-script = ExtResource("3_5i0tg")
+script = ExtResource("4_vtaks")
 loop = false
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Platforms/MovingPlatform"]
@@ -115,7 +117,7 @@ collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/MovingPlatform/AnimatableBody2D"]
 position = Vector2(0, 5)
-texture = ExtResource("4_bdhmt")
+texture = ExtResource("5_kvpfn")
 hframes = 4
 vframes = 5
 
@@ -131,7 +133,7 @@ libraries = {
 position = Vector2(-24, -8)
 scale = Vector2(5, 5)
 curve = SubResource("Curve2D_bdhmt")
-script = ExtResource("3_5i0tg")
+script = ExtResource("4_vtaks")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Platforms/MovingPlatform2"]
 position = Vector2(75.2, 75.2)
@@ -147,7 +149,7 @@ collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="Platforms/MovingPlatform2/AnimatableBody2D"]
 position = Vector2(0, 5)
-texture = ExtResource("4_bdhmt")
+texture = ExtResource("5_kvpfn")
 hframes = 4
 vframes = 5
 
@@ -159,12 +161,12 @@ libraries = {
 &"": SubResource("AnimationLibrary_k1sd0")
 }
 
-[node name="Player" parent="." instance=ExtResource("4_kelw5")]
+[node name="Player" parent="." instance=ExtResource("6_dinhu")]
 position = Vector2(352, 328)
 scale = Vector2(3.18814, 2.95465)
 
 [node name="Node" type="Node" parent="."]
 
-[node name="Slime" parent="Node" instance=ExtResource("5_lfrn8")]
+[node name="Slime" parent="Node" instance=ExtResource("7_kvuet")]
 position = Vector2(288, 480)
 scale = Vector2(4.01221, 2.85705)

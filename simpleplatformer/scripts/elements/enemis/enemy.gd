@@ -104,6 +104,7 @@ func death_state():
 	set_physics_process(false) # stops state management
 	velocity.x = 0
 	animation_player.play("death")
+	Signals.emit_signal("enemy_is_dead")
 	Globals.disable_all(self)
 	await animation_player.animation_finished
 	queue_free()
