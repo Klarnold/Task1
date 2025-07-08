@@ -1,6 +1,6 @@
 ### ESSENTIALS
 
-To test the game, download code and launch "SimplePlatformer.exe" on Windows. Enjoy!
+To test the game, download code (repository "simpleplatformer") and launch "SimplePlatformer.exe" on Windows. Enjoy!
 
 
 ### Game introduction
