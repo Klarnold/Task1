@@ -21,5 +21,23 @@ Godot editor plugin to remove the scene tabbar from the top of the script editor
 
 ![image](https://github.com/user-attachments/assets/f5f12007-b897-4355-9c05-049a136f1515)
 
+### Labour costs
+
+Work was started approximately at 17:15 07.07.25 ended at 1:15 07.07.25 
+and continued from 11:15 08.07.25 to 13:15 08.07.25
+
+The work has done and in the sum was spent approximately 10 work hours
+
+
+### Possible advances
+
+Let's list some features which may improve UE in descending order of importance:
+1) Sound effects;
+2) Parallax BackGround;
+3) Pause menu;
+4) Settings;
+5) Start menu;
+
+
 ### Used sptires
 Author - Brackeys https://brackeysgames.itch.io/brackeys-platformer-bundle
