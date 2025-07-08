@@ -1,3 +1,7 @@
+### ESSENTIALS
+
+To test the game, download code and launch "SimplePlatformer.exe" on Windows. Enjoy!
+
 # scene_selector
 Godot editor plugin to remove the scene tabbar from the top of the script editor and adds a dropdown above the scene dock.  Intended for use with a plugin like script-ide or script-tabs so the scene tab is removed when the script editor is selected but also shows a drop down list above the scene dock so you can switch between scenes in the scene dock.
 
